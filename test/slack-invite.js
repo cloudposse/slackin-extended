@@ -1,44 +1,44 @@
-import nock from 'nock'
-import assert from 'assert'
-import invite from '../lib/slack-invite'
+const assert = require('assert');
+const nock = require('nock');
+const invite = require('../lib/slack-invite');
 
 describe('slack-invite', () => {
   describe('.invite()', () => {
-    var opts
+    let opts;
 
     before(() => {
       opts = {
         channel: 'mychannel',
         email: 'user@example.com',
         org: 'myorg',
-        token: 'mytoken'
-      }
-    })
+        token: 'mytoken',
+      };
+    });
 
     it('succeeds when ok', (done) => {
-      nock(`https://${opts.org}.slack.com`).
-        post('/api/users.admin.invite').
-        reply(200, { ok: true })
+      nock(`https://${opts.org}.slack.com`)
+        .post('/api/users.admin.invite')
+        .reply(200, { ok: true });
 
       invite(opts, (err) => {
-        assert.equal(err, null)
-        done()
-      })
-    })
+        assert.strictEqual(err, null);
+        done();
+      });
+    });
 
     it('passes along an error message', (done) => {
-      nock(`https://${opts.org}.slack.com`).
-        post('/api/users.admin.invite').
-        reply(200, {
+      nock(`https://${opts.org}.slack.com`)
+        .post('/api/users.admin.invite')
+        .reply(200, {
           ok: false,
-          error: 'other error'
-        })
+          error: 'other error',
+        });
 
       invite(opts, (err) => {
-        assert.notEqual(err, null)
-        assert.equal(err.message, 'other error')
-        done()
-      })
-    })
-  })
-})
+        assert.notStrictEqual(err, null);
+        assert.strictEqual(err.message, 'other error');
+        done();
+      });
+    });
+  });
+});

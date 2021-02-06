@@ -10,15 +10,15 @@
 
 svg(xmlns='http://www.w3.org/2000/svg', width=tw, height='20')
 
-  rect(rx='3', height='20', width=tw, fill='#555')
-  rect(rx='3', height='20', width=rw, fill=bg, x=lw)
+  rect(rx='3', height='20', width=tw, fill='#555')/
+  rect(rx='3', height='20', width=rw, fill=bg, x=lw)/
 
-  path(d=`M${lw} 0h${sep}v20h-${sep}z`, fill=bg)
+  path(d=`M${lw} 0h${sep}v20h-${sep}z`, fill=bg)/
 
-  g(text-anchor='middle', font-family='Verdana', font-size='11')
+  g(text-anchor='middle', font-family='DejaVu Sans, Verdana, Geneva, sans-serif', font-size='11')
 
     text(fill='#010101', x=Math.round(lw / 2), y='15', fill-opacity='.3')= title
-    text(fill='#ffffff', x=Math.round(lw / 2), y='14')= title
+    text(fill='#fff', x=Math.round(lw / 2), y='14')= title
 
-    text(fill='#010101', x=(lw + Math.round(lw / 2)), y='15', fill-opacity='.3')= value
-    text(fill=fg, x=(lw + Math.round(lw / 2)), y='14')= value
+    text(fill='#010101', x=(lw + Math.round(rw / 2)), y='15', fill-opacity='.3')= value
+    text(fill=fg, x=(lw + Math.round(rw / 2)), y='14')= value

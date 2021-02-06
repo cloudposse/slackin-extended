@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const args = require('args');
-const slackin = require('./../dist').default;
 const hostenv = require('hostenv');
 const dbg = require('debug');
+const slackin = require('../lib');
+
+require('dotenv').config();
 
 const mainLog = dbg('slackin:main');
 
@@ -34,11 +36,11 @@ args
   )
   .option(
     ['s', 'silent'], 'Do not print out warnings or errors',
-    !!process.env.SLACKIN_SILENT,
+    Boolean(process.env.SLACKIN_SILENT),
   )
   .option(
     ['x', 'cors'], 'Enable CORS for all routes',
-    !!process.env.SLACKIN_CORS,
+    Boolean(process.env.SLACKIN_CORS),
   )
   .option(
     ['a', 'analytics'], 'Google Analytics ID',
@@ -54,7 +56,7 @@ args
   )
   .option(
     ['I', 'recaptcha-invisible'], 'Use invisible reCAPTCHA',
-    !!process.env.RECAPTCHA_INVISIBLE,
+    Boolean(process.env.RECAPTCHA_INVISIBLE),
   )
   .option(
     ['T', 'theme'], 'Color scheme to use, "light" (default) or "dark"',
@@ -94,11 +96,12 @@ if (flags.help || !org || !token) {
 flags.recaptcha = {
   secret: flags.recaptchaSecret,
   sitekey: flags.recaptchaSitekey,
-  invisible: !!flags.recaptchaInvisible,
+  invisible: Boolean(flags.recaptchaInvisible),
 };
 
 // Advanced parameters (env-only)
-flags.proxy = !!process.env.SLACKIN_PROXY;
+flags.pageDelay = process.env.SLACKIN_PAGE_DELAY;
+flags.proxy = Boolean(process.env.SLACKIN_PROXY);
 flags.redirectFQDN = process.env.SLACKIN_HTTPS_REDIRECT;
 flags.letsencrypt = process.env.SLACKIN_LETSENCRYPT;
 
